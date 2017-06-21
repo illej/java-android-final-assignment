@@ -7,20 +7,15 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
+import android.graphics.Typeface;
 import android.os.Handler;
-import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.AppCompatImageView;
+import android.util.AttributeSet;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 /**
@@ -54,7 +49,6 @@ public class GameView extends AppCompatImageView {
         super(context);
         this.context = context;
         // this.gDetect = new GestureDetectorCompat(context, new GestureListener());
-
     }
 
     public void setViewModel(ViewModel viewModel) {
@@ -96,6 +90,7 @@ public class GameView extends AppCompatImageView {
                 Color.CYAN, this.theseusRekt);*/
 
         /* BITMAP -> CANVAS */
+        // TODO: RectF to bitmap?
         Bitmap bitmapTheseus = GameActivity.decodeSampledBitmapFromResource(
                 getResources(),
                 R.drawable.link,
@@ -104,9 +99,6 @@ public class GameView extends AppCompatImageView {
         int xTheseus = this.convertedUnitX(this.viewModel.wheresThes().across());
         int yTheseus = this.convertedUnitY(this.viewModel.wheresThes().down());
         this.drawEntityBitmap(canvas, xTheseus, yTheseus, bitmapTheseus);
-        /*canvas.drawBitmap(bitmapTheseus,
-                new Rect(0, 0, bitmapTheseus.getWidth(), bitmapTheseus.getHeight()),
-                new Rect(xTheseus, yTheseus, (int) (xTheseus + cellSize), (int) (yTheseus + cellSize)), null);*/
 
         // minotaur -------------------------------------------------------------------------------
         /*this.drawEntity(canvas,
@@ -122,20 +114,21 @@ public class GameView extends AppCompatImageView {
         int xMinotaur = this.convertedUnitX(this.viewModel.wheresMin().across());
         int yMinotaur = this.convertedUnitY(this.viewModel.wheresMin().down());
         this.drawEntityBitmap(canvas, xMinotaur, yMinotaur, bitmapMinotaur);
-        /*Log.d("xMin", String.valueOf(xMinotaur));
-        Log.d("yMin", String.valueOf(yMinotaur));
-        canvas.drawBitmap(bitmapMinotaur,
-                new Rect(0, 0, bitmapMinotaur.getWidth(), bitmapMinotaur.getHeight()),
-                new Rect(xMinotaur, yMinotaur, (int) (xMinotaur + cellSize), (int) (yMinotaur + cellSize)), null);*/
 
         // exit -----------------------------------------------------------------------------------
-        this.drawEntity(canvas,
-                this.convertedUnitX(this.viewModel.wheresExit().across()),
-                this.convertedUnitY(this.viewModel.wheresExit().down()),
-                Color.GREEN, this.exitRekt);
+        Bitmap bitmapExit = GameActivity.decodeSampledBitmapFromResource(
+                getResources(),
+                R.drawable.exit64,
+                (int) cellSize,
+                (int) cellSize);
+        int xExit = this.convertedUnitX(this.viewModel.wheresExit().across());
+        int yExit = this.convertedUnitY(this.viewModel.wheresExit().down());
+        this.drawEntityBitmap(canvas, xExit, yExit, bitmapExit);
 
         // draw level title
-        this.drawMessage(canvas, this.viewModel.getLevelDatas());
+        //this.drawMessage(canvas, this.viewModel.getLevelDatas());
+        this.drawTitle(canvas, this.viewModel.getFilename());
+        this.drawMoveCount(canvas, this.viewModel.getMoveCount());
     }
 
     private void drawBackground(Canvas canvas, int color) {
@@ -218,20 +211,41 @@ public class GameView extends AppCompatImageView {
         }
     }
 
-    private void drawEntityBitmap(Canvas canvas, float x, float y, Bitmap bitmap) {
+    private void drawEntityBitmap(Canvas canvas, int x, int y, Bitmap bitmap) {
         canvas.drawBitmap(bitmap,
                 new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight()),
-                new Rect(
-                        (int) x,
-                        (int) y,
-                        (int) x + (int) cellSize,
-                        (int) y + (int) cellSize), null);
+                new Rect(x, y,
+                        x + (int) cellSize,
+                        y + (int) cellSize), null);
+    }
+
+    private void drawTitle(Canvas canvas, String title) {
+        Paint p = new Paint();
+        p.setColor(Color.WHITE);
+        p.setTextSize(50);
+        //p.setTypeface(Typeface.create("Droid Sans",Typeface.NORMAL));
+        double margin = getMeasuredWidth() * 0.05;
+        String content = "level: " + title;
+        canvas.drawText(content, (float) margin, (float) margin, p);
+    }
+
+    private void drawMoveCount(Canvas canvas, String count) {
+        Paint p = new Paint();
+        p.setColor(Color.WHITE);
+        p.setTextSize(50);
+
+        String content = "moves: " + count;
+        float textWidth = p.measureText(content);
+        double xMargin = (getMeasuredWidth() * 0.95) - textWidth;
+        double yMargin = getMeasuredWidth() * 0.05;
+        canvas.drawText(content, (float) xMargin, (float) yMargin, p);
     }
 
     /*
         MOVEMENT ----------------------------------------------------------------------------------
      */
     private void move_WITH_ANIMATIONS(Direction direction) {
+        // TODO: this is garbage
         this.viewModel.moveThes(direction);
         Log.d("xMinPreMove", String.valueOf(this.viewModel.wheresMin().across()));
         Log.d("yMinPreMove", String.valueOf(this.viewModel.wheresMin().down()));
@@ -258,7 +272,6 @@ public class GameView extends AppCompatImageView {
         Log.d("xMinPostMove2", String.valueOf(this.viewModel.wheresMin().across()));
         Log.d("yMinPostMove2", String.valueOf(this.viewModel.wheresMin().down()));
         invalidate();
-
     }
 
     private void move_WITH_JACOBS_HACKS(Direction direction) {

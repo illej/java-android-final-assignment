@@ -7,7 +7,7 @@ package nz.ac.ara.ayreye.finalassignment;
 public interface ViewModelable {
     void loadLevel(String fileName);
     void saveLevel();
-    int getMoveCount();
+    String getMoveCount();
     int getDepthDown();
     int getWidthAcross();
     Point wheresThes();

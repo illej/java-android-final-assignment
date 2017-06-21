@@ -20,7 +20,7 @@ public class ViewModel implements ViewModelable {
     private Loader loader;
     private Saver saver;
 
-    private String filename;
+    private String filename = null;
     private int moveCount = 0;
 
     public ViewModel(Context context) {
@@ -56,8 +56,8 @@ public class ViewModel implements ViewModelable {
     }
 
     @Override
-    public int getMoveCount() {
-        return this.moveCount;
+    public String getMoveCount() {
+        return String.valueOf(this.moveCount);
     }
 
     @Override
@@ -134,6 +134,10 @@ public class ViewModel implements ViewModelable {
     }
 
     public String getLevelDatas() {
+        return this.filename;
+    }
+
+    public String getFilename() {
         return this.filename;
     }
 }

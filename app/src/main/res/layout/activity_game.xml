@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,12 +13,16 @@
         android:id="@+id/theseusIV"
         android:layout_width="54dp"
         android:layout_height="54dp"
-        android:src="@drawable/link" />
+        android:src="@drawable/link"
+        tools:layout_editor_absoluteY="499dp"
+        tools:layout_editor_absoluteX="100dp" />
 
     <ImageView
         android:id="@+id/minotaurIV"
         android:layout_width="54dp"
         android:layout_height="54dp"
-        android:src="@drawable/jig" />
+        android:src="@drawable/jig"
+        tools:layout_editor_absoluteY="470dp"
+        tools:layout_editor_absoluteX="16dp" />
 
 </android.support.constraint.ConstraintLayout>
