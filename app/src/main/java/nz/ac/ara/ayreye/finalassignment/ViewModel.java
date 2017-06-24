@@ -110,14 +110,15 @@ public class ViewModel implements ViewModelable {
     public String checkWinState() {
         String result = null;
         String title = null;
-        if (this.wheresThes() == null) {
+        if (this.wheresThes().across() == this.wheresMin().across()
+                && this.wheresThes().down() == this.wheresMin().down()) {
             result = "lose";
             title = "Game Over! ~:<";
             this.endGame(title);
         } else if (this.wheresThes().across() == this.wheresExit().across()
                 && this.wheresThes().down() == this.wheresExit().down()) {
             result = "win";
-            title = "Victory! c|:D";
+            title = "Victory! :D";
             this.endGame(title);
         }
         return result;

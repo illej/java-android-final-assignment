@@ -42,11 +42,6 @@ public class GameActivity extends AppCompatActivity {
         viewModel = new ViewModel(this);
         viewModel.loadLevel(filename);
 
-        //this.setDimensions();
-        //this.setImages();
-
-        // unecessary now ???
-        // I guess it be used to draw the background..
         GameView gameView = new GameView(this);
         gameView.setViewModel(viewModel);
         gameView.setClickable(true);

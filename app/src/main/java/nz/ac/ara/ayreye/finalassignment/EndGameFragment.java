@@ -49,4 +49,10 @@ public class EndGameFragment extends DialogFragment {
                 });
         return builder.create();
     }
+
+    @Override
+    public void onCancel(DialogInterface dialog) {
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        startActivity(intent);
+    }
 }

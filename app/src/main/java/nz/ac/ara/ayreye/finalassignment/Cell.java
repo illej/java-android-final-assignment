@@ -10,7 +10,8 @@ public class Cell {
 	public Cell() {
 		this.container.put("top", Wall.NOTHING);
 		this.container.put("left", Wall.NOTHING);
-		this.container.put("character", Part.NONE);
+		this.container.put("theseus", Part.NONE);
+		this.container.put("minotaur", Part.NONE);
 		this.container.put("objective", Part.NONE);
 	}
 	

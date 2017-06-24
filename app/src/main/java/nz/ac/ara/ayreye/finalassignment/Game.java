@@ -142,12 +142,12 @@ public class Game implements Playable, Loadable, Saveable, Saver, Loader {
 
 	@Override
 	public Point wheresTheseus() {
-		return this.findObject(Part.THESEUS, "character");
+		return this.findObject(Part.THESEUS, "theseus");
 	}
 
 	@Override
 	public Point wheresMinotaur() {
-		return this.findObject(Part.MINOTAUR, "character");
+		return this.findObject(Part.MINOTAUR, "minotaur");
 	}
 
 	@Override
@@ -201,24 +201,24 @@ public class Game implements Playable, Loadable, Saveable, Saver, Loader {
 
 	@Override
 	public void addTheseus(Point where) {
-		Point check = this.findObject(Part.THESEUS, "character");
+		Point check = this.findObject(Part.THESEUS, "theseus");
 		if (check != null) {
-			this.setCellInfo(check, Part.NONE, "character");
+			this.setCellInfo(check, Part.NONE, "theseus");
 			System.out.println("found a theseus, but cloned and killed the original.");
 		}
 
-		this.setCellInfo(where, Part.THESEUS, "character");
+		this.setCellInfo(where, Part.THESEUS, "theseus");
 	}
 
 	@Override
 	public void addMinotaur(Point where) {
-		Point check = this.findObject(Part.MINOTAUR, "character");
+		Point check = this.findObject(Part.MINOTAUR, "minotaur");
 		if (check != null) {
-			this.setCellInfo(check, Part.NONE, "character");
+			this.setCellInfo(check, Part.NONE, "minotaur");
 			System.out.println("found a minotaur, but cloned and killed the original.");
 		}
 		
-		this.setCellInfo(where, Part.MINOTAUR, "character");
+		this.setCellInfo(where, Part.MINOTAUR, "minotaur");
 	}
 
 	@Override
@@ -245,7 +245,7 @@ public class Game implements Playable, Loadable, Saveable, Saver, Loader {
 					current.down() + direction.yAdjust);
 
 		if (!this.isBlocked(direction, current, destination)) {
-			this.setCellInfo(current, Part.NONE, "character");
+			this.setCellInfo(current, Part.NONE, "theseus");
 			this.addTheseus(destination);
 		} else {
 			System.out.println("blocked! ~:(");
@@ -270,7 +270,7 @@ public class Game implements Playable, Loadable, Saveable, Saver, Loader {
 							destination = new Pointer(
 									minotaurAt.across() + horizDir.xAdjust,
 									minotaurAt.down() + horizDir.yAdjust))) {
-				this.setCellInfo(minotaurAt, Part.NONE, "character");
+				this.setCellInfo(minotaurAt, Part.NONE, "minotaur");
 				this.addMinotaur(destination);
 			} else if (vertDir != null
 					&& !this.isBlocked(
@@ -279,7 +279,7 @@ public class Game implements Playable, Loadable, Saveable, Saver, Loader {
 							destination = new Pointer(
 									minotaurAt.across() + vertDir.xAdjust,
 									minotaurAt.down() + vertDir.yAdjust))) {
-				this.setCellInfo(minotaurAt, Part.NONE, "character");
+				this.setCellInfo(minotaurAt, Part.NONE, "minotaur");
 				this.addMinotaur(destination);
 			}
 			//moves--;

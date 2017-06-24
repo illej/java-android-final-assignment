@@ -28,12 +28,15 @@ public class AnimatableRectF extends RectF{
     public void setTop(float top){
         this.top = top;
     }
+
     public void setBottom(float bottom){
         this.bottom = bottom;
     }
+
     public void setRight(float right){
         this.right = right;
     }
+
     public void setLeft(float left){
         this.left = left;
     }

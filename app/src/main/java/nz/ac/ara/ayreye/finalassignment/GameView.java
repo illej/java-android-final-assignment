@@ -75,12 +75,28 @@ public class GameView extends AppCompatImageView {
 
     @Override
     public void onDraw(Canvas canvas) {
+        this.viewModel.checkWinState();
         this.setDimensions();
         this.drawBackground(canvas, Color.DKGRAY);
         this.drawLevel(canvas, this.viewModel.getWidthAcross(), this.viewModel.getDepthDown());
 
         // draw entities
         this.initialiseRectFEntities();
+
+        // exit -----------------------------------------------------------------------------------
+        Bitmap bitmapExit = GameActivity.decodeSampledBitmapFromResource(
+                getResources(),
+                R.drawable.exit64_trsp,
+                (int) cellSize,
+                (int) cellSize);
+        int xExit = this.convertedUnitX(this.viewModel.wheresExit().across());
+        int yExit = this.convertedUnitY(this.viewModel.wheresExit().down());
+        this.drawEntityBitmap(canvas, xExit, yExit, bitmapExit);
+
+        // draw level title
+        //this.drawMessage(canvas, this.viewModel.getLevelDatas());
+        this.drawTitle(canvas, this.viewModel.getFilename());
+        this.drawMoveCount(canvas, this.viewModel.getMoveCount());
 
         // theseus --------------------------------------------------------------------------------
         /*  RECT -> CANVAS
@@ -114,21 +130,6 @@ public class GameView extends AppCompatImageView {
         int xMinotaur = this.convertedUnitX(this.viewModel.wheresMin().across());
         int yMinotaur = this.convertedUnitY(this.viewModel.wheresMin().down());
         this.drawEntityBitmap(canvas, xMinotaur, yMinotaur, bitmapMinotaur);
-
-        // exit -----------------------------------------------------------------------------------
-        Bitmap bitmapExit = GameActivity.decodeSampledBitmapFromResource(
-                getResources(),
-                R.drawable.exit64,
-                (int) cellSize,
-                (int) cellSize);
-        int xExit = this.convertedUnitX(this.viewModel.wheresExit().across());
-        int yExit = this.convertedUnitY(this.viewModel.wheresExit().down());
-        this.drawEntityBitmap(canvas, xExit, yExit, bitmapExit);
-
-        // draw level title
-        //this.drawMessage(canvas, this.viewModel.getLevelDatas());
-        this.drawTitle(canvas, this.viewModel.getFilename());
-        this.drawMoveCount(canvas, this.viewModel.getMoveCount());
     }
 
     private void drawBackground(Canvas canvas, int color) {
@@ -274,21 +275,23 @@ public class GameView extends AppCompatImageView {
         invalidate();
     }
 
-    private void move_WITH_JACOBS_HACKS(Direction direction) {
+    private void move_WITH_JACOBS_HACKS(/*Direction direction*/) {
         // TODO: tidy up
         String result;
-        this.viewModel.moveThes(direction);
+        //this.viewModel.moveThes(direction);
         if ((result = this.viewModel.checkWinState()) == null) {
             this.viewModel.moveMin();
             invalidate();
             try {
+                this.setClickable(false);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         viewModel.moveMin();
                         invalidate();
+                        setClickable(true);
                     }
-                }, 500);
+                }, 300);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -317,17 +320,17 @@ public class GameView extends AppCompatImageView {
                 float absXDelta = Math.abs(xDelta);
                 float absYDelta = Math.abs(yDelta);
 
-                if(absXDelta > absYDelta
+                if (absXDelta > absYDelta
                         && absXDelta > MIN_DISTANCE){
-                    if(xDelta > 0) {
+                    if (xDelta > 0) {
                         toaster("-> right");
                         direction = Direction.RIGHT;
                     } else {
                         toaster("left <-");
                         direction = Direction.LEFT;
                     }
-                } else if(absYDelta > MIN_DISTANCE){
-                    if(yDelta > 0) {
+                } else if (absYDelta > MIN_DISTANCE) {
+                    if (yDelta > 0) {
                         toaster("v down");
                         direction = Direction.DOWN;
                     } else {
@@ -335,12 +338,52 @@ public class GameView extends AppCompatImageView {
                         direction = Direction.UP;
                     }
                 }
+
+                if (absXDelta < MIN_DISTANCE
+                        && absYDelta < MIN_DISTANCE) {
+
+                    int xTh = convertedUnitX(this.viewModel.wheresThes().across());
+                    int yTh = convertedUnitY(this.viewModel.wheresThes().down());
+
+                    int xThFloor = convertedUnitX(this.viewModel.wheresThes().across()) - 100;
+                    int xThCeiling = convertedUnitX(this.viewModel.wheresThes().across()) + 100;
+                    int yThFloor = convertedUnitY(this.viewModel.wheresThes().down()) - 100;
+                    int yThCeiling = convertedUnitY(this.viewModel.wheresThes().down()) + 100;
+
+                    Log.d("xTh", String.valueOf(xTh));
+                    Log.d("yTh", String.valueOf(yTh));
+                    Log.d("xThFloor", String.valueOf(xThFloor));
+                    Log.d("xThCeiling", String.valueOf(xThCeiling));
+                    Log.d("yThFloor", String.valueOf(yThFloor));
+                    Log.d("yThCeiling", String.valueOf(yThCeiling));
+
+                    Log.d("x1", String.valueOf(x1));
+                    Log.d("y1", String.valueOf(y1));
+
+                    Rect pauseRect = new Rect(xTh, yTh, xTh + (int) cellSize, yTh + (int) cellSize);
+
+                    Log.d("pauseRect.left", String.valueOf(pauseRect.left));
+                    Log.d("pauseRect.right", String.valueOf(pauseRect.right));
+                    Log.d("pauseRect.top", String.valueOf(pauseRect.top));
+                    Log.d("pauseRect.bottom", String.valueOf(pauseRect.bottom));
+
+                    if (x1 > pauseRect.left
+                            && x1 < pauseRect.right
+                            && y1 > pauseRect.top
+                            && y1 < pauseRect.bottom) {
+                        // just move mino
+                        toaster("paused!!!!?!!?!?");
+                        direction = null;
+                        this.move_WITH_JACOBS_HACKS();
+                    }
+                }
                 break;
         }
         invalidate();
         if (direction != null) {
             // this.move_WITH_ANIMATIONS(direction);
-            this.move_WITH_JACOBS_HACKS(direction);
+            this.viewModel.moveThes(direction);
+            this.move_WITH_JACOBS_HACKS(/*direction*/);
         }
         return super.onTouchEvent(event);
     }
