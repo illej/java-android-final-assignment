@@ -31,7 +31,9 @@ public class ViewModel implements ViewModelable {
     }
 
     private void setModels() {
-        Game game = new Game(new AssetLoader(this.context)/*FileLoader()*/, new FileSaver());
+        Game game = new Game(
+                new AssetLoader(this.context)/*FileLoader()*/,
+                new InternalStorageSaver(this.context)/*FileSaver()*/);
         playable = game;
         loadable = game;
         saveable = game;
@@ -45,14 +47,21 @@ public class ViewModel implements ViewModelable {
         this.loadable.addTheseus(new Pointer(10, 20));
     }
 
+    @Override
     public void loadLevel(String filename) {
         this.loader.load(this.loadable, filename);
         this.filename = filename;
     }
 
     @Override
-    public void saveLevel() {
-        Toast.makeText(this.context, "saved!", Toast.LENGTH_SHORT).show();
+    public void loadLevel_INTERNAL_STORAGE(Loader internalStorageLoader, String filename) {
+        internalStorageLoader.load(this.loadable, filename);
+    }
+
+    @Override
+    public void saveLevel(String filename) {
+        Toast.makeText(this.context, "saved: [" + filename + "]", Toast.LENGTH_SHORT).show();
+        this.saver.save(this.saveable, filename);
     }
 
     @Override

@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -14,8 +13,6 @@ import android.widget.ImageView;
 public class GameActivity extends AppCompatActivity {
 
     ViewModel viewModel;
-    ImageView theseusIV;
-    ImageView minotaurIV;
 
     private float x1 = 0;
     private float x2 = 0;
@@ -59,8 +56,10 @@ public class GameActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.save_game) {
+            viewModel.saveLevel("my_saved_level.txt");
             return true;
         } else if (id == R.id.load_game) {
+            viewModel.loadLevel_INTERNAL_STORAGE(new InternalStorageLoader(this), "my_saved_level.txt");
             return true;
         }
 

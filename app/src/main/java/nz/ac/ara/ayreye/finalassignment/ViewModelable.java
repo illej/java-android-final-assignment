@@ -5,8 +5,9 @@ package nz.ac.ara.ayreye.finalassignment;
  */
 
 public interface ViewModelable {
-    void loadLevel(String fileName);
-    void saveLevel();
+    void loadLevel(String filename);
+    void loadLevel_INTERNAL_STORAGE(Loader isLoader, String filename);
+    void saveLevel(String filename);
     String getMoveCount();
     int getDepthDown();
     int getWidthAcross();

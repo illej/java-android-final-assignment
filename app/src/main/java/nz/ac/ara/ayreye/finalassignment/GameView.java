@@ -167,10 +167,6 @@ public class GameView extends AppCompatImageView {
         Bitmap bitmap = null;
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                /*this.drawEntity(canvas,
-                        this.convertedUnitX(j),
-                        this.convertedUnitY(i),
-                        Color.YELLOW, null);*/
                 if (this.viewModel.whatsAbove(new Pointer(j, i)) == Wall.SOMETHING
                         && this.viewModel.whatsLeft(new Pointer(j, i)) == Wall.SOMETHING) {
                     bitmap = bitmapLeftTop;

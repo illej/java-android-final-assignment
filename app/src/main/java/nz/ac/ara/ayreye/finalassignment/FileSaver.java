@@ -46,7 +46,7 @@ public class FileSaver implements Saver {
 		str.append("L=");
 		for (int i = 0; i < depth; i++) {
 			for (int j = 0; j < width; j++) {
-				Wall wall = saveable.whatsLeft(new Pointer(j, i));
+				Wall wall = saveable.whatsLeft(new Pointer(i, j));
 				if (wall == Wall.SOMETHING) {
 					str.append("x");
 				} else {
@@ -72,9 +72,15 @@ public class FileSaver implements Saver {
 		//str.append(levelName);
 		
 		level = str.toString();
-		
-		try (BufferedWriter bWriter =
-				new BufferedWriter(new FileWriter(fileName))) {
+		this.write(level, fileName);
+
+	}
+
+	protected void write(String level, String fileName) {
+		BufferedWriter bWriter = null;
+
+		try {
+			bWriter = new BufferedWriter(new FileWriter(fileName));
 			bWriter.write(level);
 		} catch (IOException e) {
 			e.printStackTrace();

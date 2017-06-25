@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             }
             this.fileList = new String[arrayList.size()];
             for (int i = 0; i < arrayList.size(); i++) {
-                this.fileList[i] = arrayList.get(i);//.substring(0, (arrayList.get(i).length() - 4));
+                this.fileList[i] = arrayList.get(i);
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -35,7 +35,6 @@ public class EndGameFragment extends DialogFragment {
                                 intent = new Intent(getActivity(), GameActivity.class);
                                 current = getArguments().getString("currentLevel");
                                 extra = getLevel(current, -1);
-
                                 break;
                             case "replay":
                                 intent = new Intent(getActivity(), GameActivity.class);
