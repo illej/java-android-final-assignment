@@ -1,5 +1,7 @@
 package nz.ac.ara.ayreye.finalassignment;
 
+import android.util.Log;
+
 import java.util.Map;
 
 public class TheseusPartBuilder extends PartBuilder {
@@ -15,6 +17,7 @@ public class TheseusPartBuilder extends PartBuilder {
 	
 	@Override
 	protected void execute() {
+		Log.d("theseus at.point", String.valueOf(super.point.across()) + ", " + String.valueOf(super.point.down()));
 		super.gameLoadable.addTheseus(super.point);
 	}
 

@@ -12,7 +12,17 @@ public class WallAboveBuilder extends WallBuilder {
 	protected String getKey() {
 		return "U";
 	}
-	
+
+	@Override
+	protected void setup() {
+		String key = this.getKey();
+		this.rows = (String[]) map.get(key);
+		this.depth = rows.length;
+		this.width = rows[0].length();
+		super.gameLoadable.setDepthDown(this.depth);
+		super.gameLoadable.setWidthAcross(this.width);
+	}
+
 	@Override
 	protected void looper() {
 		for (int i = 0; i < super.depth; i++) {

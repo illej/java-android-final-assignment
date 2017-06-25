@@ -1,12 +1,16 @@
 package nz.ac.ara.ayreye.finalassignment;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Elliot on 6/21/2017.
@@ -25,11 +29,13 @@ public class EndGameFragment extends DialogFragment {
                         String selection = options[which];
                         Intent intent = null;
                         String extra = null;
+                        String current = null;
                         switch (selection) {
                             case "prev":
                                 intent = new Intent(getActivity(), GameActivity.class);
-                                // TODO: some garbage about finding relative levels?
-                                extra = getArguments().getString("currentLevel");
+                                current = getArguments().getString("currentLevel");
+                                extra = getLevel(current, -1);
+
                                 break;
                             case "replay":
                                 intent = new Intent(getActivity(), GameActivity.class);
@@ -37,13 +43,15 @@ public class EndGameFragment extends DialogFragment {
                                 break;
                             case "next":
                                 intent = new Intent(getActivity(), GameActivity.class);
-                                extra = getArguments().getString("currentLevel");
+                                current = getArguments().getString("currentLevel");
+                                extra = getLevel(current, 1);
                                 break;
                             case "home":
                                 intent = new Intent(getActivity(), MainActivity.class);
                                 break;
                         }
-                        intent.putExtra("selection", selection);
+                        intent.putExtra(MainActivity.EXTRA_FILENAME, extra);
+                        Log.d("extra", String.valueOf(extra));
                         startActivity(intent);
                     }
                 });
@@ -54,5 +62,32 @@ public class EndGameFragment extends DialogFragment {
     public void onCancel(DialogInterface dialog) {
         Intent intent = new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
+    }
+
+    private String getLevel(String current, int offset) {
+        String result = "";
+
+        try {
+            String[] list = getActivity().getAssets().list("");
+            List<String> arrayList = new ArrayList<>();
+            for (String file : list) {
+                Log.d("listAssetFiles: ", file);
+                if (file.endsWith(".txt")) {
+                    arrayList.add(file);
+                }
+            }
+
+            int idx = arrayList.indexOf(current);
+            if ((idx == 0 && offset == -1)
+                    || ((idx == arrayList.size() - 1) && offset == 1)) {
+                offset = 0;
+            }
+            result = arrayList.get(idx + offset);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 }

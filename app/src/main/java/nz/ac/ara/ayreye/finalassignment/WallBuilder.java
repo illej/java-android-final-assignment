@@ -12,15 +12,16 @@ public abstract class WallBuilder extends Builder {
 		super(gameLoadable, map);
 	}
 
-	@Override
-	protected void setup() {
-		String key = this.getKey();
-		this.rows = (String[]) map.get(key);
-		this.depth = rows.length;
-		this.width = rows[0].length();
-		super.gameLoadable.setDepthDown(this.depth);
-		super.gameLoadable.setWidthAcross(this.width);
-	}
+//	@Override
+//	protected void setup() {
+//		String key = this.getKey();
+//		this.rows = (String[]) map.get(key);
+//		this.depth = rows.length;
+//		this.width = rows[0].length();
+//		super.gameLoadable.setDepthDown(this.depth);
+//		super.gameLoadable.setWidthAcross(this.width);
+//	}
+
 	
 	@Override
 	protected void execute() {

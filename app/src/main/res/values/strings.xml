@@ -4,4 +4,6 @@
     <string name="play_btn">Play</string>
     <string name="select_level_btn">Select Level</string>
     <string name="level_select_title">Choose a Level</string>
+    <string name="save_game">Save Game State</string>
+    <string name="load_game">Load Game State</string>
 </resources>

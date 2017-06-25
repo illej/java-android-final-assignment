@@ -6,10 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.view.ContextThemeWrapper;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Elliot on 6/19/2017.
