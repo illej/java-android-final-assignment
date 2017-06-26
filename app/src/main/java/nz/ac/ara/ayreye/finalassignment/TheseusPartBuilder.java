@@ -17,7 +17,10 @@ public class TheseusPartBuilder extends PartBuilder {
 	
 	@Override
 	protected void execute() {
-		Log.d("theseus at.point", String.valueOf(super.point.across()) + ", " + String.valueOf(super.point.down()));
+		Log.d("theseus at.point", String.valueOf(
+				super.point.across())
+				+ ", "
+				+ String.valueOf(super.point.down()));
 		super.gameLoadable.addTheseus(super.point);
 	}
 

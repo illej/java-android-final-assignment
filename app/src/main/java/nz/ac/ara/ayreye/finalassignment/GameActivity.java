@@ -39,10 +39,8 @@ public class GameActivity extends AppCompatActivity {
         viewModel = new ViewModel(this);
 
         if (loadMethod.equals("assets")) {
-            Log.d("> SELECTING LOADER", String.valueOf(loadMethod));
             loader = new AssetLoader(this);
         } else if (loadMethod.equals("internal")) {
-            Log.d("> SELECTING LOADER", String.valueOf(loadMethod));
             loader = new InternalStorageLoader(this);
         }
 
@@ -80,14 +78,10 @@ public class GameActivity extends AppCompatActivity {
     private void saveGameState() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Enter a name:");
-
-        // Set up the input
         final EditText input = new EditText(this);
-        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.setInputType(InputType.TYPE_CLASS_TEXT);
-        builder.setView(input);
 
-        // Set up the buttons
+        builder.setView(input);
         builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

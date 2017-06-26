@@ -4,35 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/dark_grey"
     tools:context="nz.ac.ara.ayreye.finalassignment.MainActivity">
 
     <Button
         android:id="@+id/playButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClick"
         android:text="@string/play_btn"
+        android:onClick="onClick"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        android:layout_marginTop="48dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        android:textColor="#FFFFFF"
+        android:layout_width="170dp"
+        android:layout_height="48dp"
+        android:background="@drawable/btn_shape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"/>
 
     <Button
         android:id="@+id/selectLevelButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClick"
         android:text="@string/select_level_btn"
+        android:onClick="onClick"
+        android:textColor="#FFFFFF"
+        android:layout_width="170dp"
+        android:layout_height="48dp"
+        android:background="@drawable/btn_shape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/playButton" />
 
     <Button
-        android:text="@string/exit_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/exitButton"
+        android:text="@string/exit_btn"
+        android:onClick="onClick"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/selectLevelButton"
         android:layout_marginEnd="16dp"
@@ -41,16 +53,27 @@
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="16dp"
-        android:onClick="onClick"/>
+        android:textColor="#FFFFFF"
+        android:layout_width="170dp"
+        android:layout_height="48dp"
+        android:background="@drawable/btn_shape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"/>
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/title_banner_tatm"
-        android:id="@+id/imageView"
+        app:srcCompat="@drawable/title_banner_edit"
         android:layout_marginTop="88dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp" />
 
 </android.support.constraint.ConstraintLayout>
