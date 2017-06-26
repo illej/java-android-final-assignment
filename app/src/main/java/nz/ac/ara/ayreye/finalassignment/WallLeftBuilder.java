@@ -1,7 +1,5 @@
 package nz.ac.ara.ayreye.finalassignment;
 
-import android.util.Log;
-
 import java.util.Map;
 
 public class WallLeftBuilder extends WallBuilder {
@@ -30,18 +28,8 @@ public class WallLeftBuilder extends WallBuilder {
 	@Override
 	protected void looper() {
 		for (int j = 0; j < super.width; j++) {
-
-            Log.d("super.width", String.valueOf(super.width));
-            Log.d("i", String.valueOf(j));
-
             String col = this.cols[j];
-
-            Log.d("row.length()", String.valueOf(col.length()));
-
             for (int i = 0; i < super.depth; i++) {
-
-				Log.d("x, y", String.valueOf(i) + ", " + String.valueOf(j));
-
 				if (col.charAt(i) == 'x') {
 					super.point = new Pointer(j, i);
 					this.addHook();

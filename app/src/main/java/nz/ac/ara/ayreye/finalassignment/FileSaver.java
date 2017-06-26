@@ -44,8 +44,8 @@ public class FileSaver implements Saver {
 		}
 		// build 'L'
 		str.append("L=");
-		for (int i = 0; i < depth; i++) {
-			for (int j = 0; j < width; j++) {
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < depth; j++) {
 				Wall wall = saveable.whatsLeft(new Pointer(i, j));
 				if (wall == Wall.SOMETHING) {
 					str.append("x");
@@ -53,7 +53,7 @@ public class FileSaver implements Saver {
 					str.append("o");
 				}
 			}
-			if (i == depth - 1) {
+			if (i == width - 1) {
 				str.append(";");
 			} else {
 				str.append(",");

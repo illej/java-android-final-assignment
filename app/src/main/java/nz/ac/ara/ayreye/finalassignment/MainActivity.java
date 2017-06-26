@@ -1,26 +1,18 @@
 package nz.ac.ara.ayreye.finalassignment;
 
-import android.app.Dialog;
-import android.app.FragmentManager;
 import android.content.Intent;
-import android.content.res.AssetManager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String EXTRA_FILENAME = "nz.ac.ara.ayreye.finalassignment.FILENAME";
+    public static final String EXTRA_LOAD_METHOD = "nz.ac.ara.ayreye.finalassignment.LOAD_METHOD";
     public String[] fileList;
 
     @Override
@@ -37,15 +29,19 @@ public class MainActivity extends AppCompatActivity {
                 String firstLevel = this.fileList[0];
                 Intent intent = new Intent(this, GameActivity.class);
                 intent.putExtra(MainActivity.EXTRA_FILENAME, firstLevel);
+                intent.putExtra(MainActivity.EXTRA_LOAD_METHOD, "assets");
                 startActivity(intent);
                 break;
             case R.id.selectLevelButton:
                 LevelSelectFragment levelSelect = new LevelSelectFragment();
                 Bundle args = new Bundle();
                 args.putStringArray("levels", this.fileList);
+                args.putString(MainActivity.EXTRA_LOAD_METHOD, "assets");
                 levelSelect.setArguments(args);
                 levelSelect.show(getFragmentManager(), "levels");
                 break;
+            case R.id.exitButton:
+                System.exit(0);
         }
     }
 
@@ -54,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             String[] list = getAssets().list("");
             List<String> arrayList = new ArrayList<>();
             for (String file : list) {
-                Log.d("listAssetFiles: ", file);
+                Log.d("MainActv Created: Assts", file);
                 if (file.endsWith(".txt")) {
                     arrayList.add(file);
                 }

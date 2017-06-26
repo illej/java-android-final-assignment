@@ -3,6 +3,7 @@ package nz.ac.ara.ayreye.finalassignment;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -25,26 +26,17 @@ public class ViewModel implements ViewModelable {
 
     public ViewModel(Context context) {
         this.context = context;
-
-        this.setModels();
-        //this.newGame();
     }
 
-    private void setModels() {
+    public void setModels(Loader newLoader, Saver newSaver) {
         Game game = new Game(
-                new AssetLoader(this.context)/*FileLoader()*/,
-                new InternalStorageSaver(this.context)/*FileSaver()*/);
+                newLoader, //new AssetLoader(this.context)/*FileLoader()*/,
+                newSaver); //new InternalStorageSaver(this.context)/*FileSaver()*/);
         playable = game;
         loadable = game;
         saveable = game;
         loader = game;
         saver = game;
-    }
-
-    private void newGame() {
-        this.loadable.setDepthDown(200);
-        this.loadable.setWidthAcross(200);
-        this.loadable.addTheseus(new Pointer(10, 20));
     }
 
     @Override
@@ -119,15 +111,21 @@ public class ViewModel implements ViewModelable {
     public String checkWinState() {
         String result = null;
         String title = null;
+        MediaPlayer player;
+
         if (this.wheresThes().across() == this.wheresMin().across()
                 && this.wheresThes().down() == this.wheresMin().down()) {
             result = "lose";
-            title = "Game Over! ~:<";
+            title = "Game Over!";
+            player = MediaPlayer.create(this.context, R.raw.mk_lose);
+            player.start();
             this.endGame(title);
         } else if (this.wheresThes().across() == this.wheresExit().across()
                 && this.wheresThes().down() == this.wheresExit().down()) {
             result = "win";
-            title = "Victory! :D";
+            title = "Victory!";
+            player = MediaPlayer.create(this.context, R.raw.ff7_victory);
+            player.start();
             this.endGame(title);
         }
         return result;
@@ -141,10 +139,6 @@ public class ViewModel implements ViewModelable {
         args.putString("currentLevel", this.filename);
         endGame.setArguments(args);
         endGame.show(fragmentManager, "title");
-    }
-
-    public String getLevelDatas() {
-        return this.filename;
     }
 
     public String getFilename() {

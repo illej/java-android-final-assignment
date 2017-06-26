@@ -32,13 +32,8 @@ public class InternalStorageLoader extends FileLoader {
             Log.d("files", String.valueOf(file));
             if (file.endsWith(".txt")) {
                 Log.d("loading file", String.valueOf(file));
-                //level = file;
             }
         }
-
-//        Call openFileInput() and pass it the name of the file to read. This returns a FileInputStream.
-//        Read bytes from the file with read().
-//        Then close the stream with close().
 
         FileInputStream fis;
         InputStreamReader isr;

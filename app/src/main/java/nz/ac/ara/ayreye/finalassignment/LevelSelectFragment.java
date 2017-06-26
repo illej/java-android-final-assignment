@@ -17,6 +17,7 @@ public class LevelSelectFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final String[] levels = getArguments().getStringArray("levels");
+        final String loadMethod = getArguments().getString(MainActivity.EXTRA_LOAD_METHOD);
         builder.setTitle(R.string.level_select_title)
                 .setItems(levels, new DialogInterface.OnClickListener() {
                     @Override
@@ -24,6 +25,7 @@ public class LevelSelectFragment extends DialogFragment {
                         String selection = levels[which];
                         Intent intent = new Intent(getActivity(), GameActivity.class);
                         intent.putExtra(MainActivity.EXTRA_FILENAME, selection);
+                        intent.putExtra(MainActivity.EXTRA_LOAD_METHOD, loadMethod);
                         startActivity(intent);
                     }
                 });

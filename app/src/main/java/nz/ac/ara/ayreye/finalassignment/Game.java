@@ -1,7 +1,5 @@
 package nz.ac.ara.ayreye.finalassignment;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,16 +21,9 @@ public class Game implements Playable, Loadable, Saveable, Saver, Loader {
 	 */
 
 	private Cell getCell(Point where) {
-
-        Log.d("whereDOWN", "getCell: " + String.valueOf(where.down()));
-
 		List<Cell> row = level.get(where.down());
 		Cell cell = row.get(where.across());
 
-        if (cell.get("theseus") == Part.THESEUS) {
-            Log.d("found theseus", "in getCell");
-
-        }
 		return cell;
 	}
 
@@ -64,18 +55,11 @@ public class Game implements Playable, Loadable, Saveable, Saver, Loader {
 		Point result = null;
 		List<Point> points = new ArrayList<Point>();
 
-        Log.d("this.width", String.valueOf(this.width));
-        Log.d("this.depth", String.valueOf(this.depth));
-
 		for (int i = 0; i < this.depth; i++) {
 			for (int j = 0; j < this.width; j++) {
 				Point here = new Pointer(j, i);
-                Log.d("findObj i", String.valueOf(i));
-                Log.d("findObj j", String.valueOf(j));
                 if (this.getCell(here).get(key) == object) {
-                    Log.d("found T in findObj", String.valueOf(this.getCell(here).get(key)));
 					result = here;
-                    Log.d("theseus location", String.valueOf(result));
                     points.add(result);
 				}
 			}
@@ -181,11 +165,8 @@ public class Game implements Playable, Loadable, Saveable, Saver, Loader {
 		if (widthAcross < 4) {
 			throw new IllegalArgumentException();
 		}
-		
+
 		this.width = widthAcross;
-
-        Log.d("setting width", String.valueOf(this.width));
-
 		if (this.depth > 0
 				&& this.width > 0) {
 			this.build();
@@ -201,9 +182,6 @@ public class Game implements Playable, Loadable, Saveable, Saver, Loader {
 		} 
 		
 		this.depth = depthDown;
-
-        Log.d("setting depth", String.valueOf(this.depth));
-
 		if (this.width > 0
 				&& this.depth > 0) {
 			this.build();
